@@ -1,0 +1,98 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens for Shree Laxmi Inn.
+ *
+ * Palette is drawn from the guesthouse's own surroundings rather than a
+ * generic template: the marigold garlands sold outside every Ayodhya
+ * temple gate, the sindoor-maroon of temple arches, the brass of a diya,
+ * and the indigo sky during the evening aarti.
+ */
+@theme {
+  --color-marigold-50: #fff8e6;
+  --color-marigold-100: #ffedb8;
+  --color-marigold-400: #f6b73c;
+  --color-marigold-500: #f2a00c;
+  --color-marigold-600: #d4870a;
+  --color-marigold-700: #a86a08;
+
+  --color-maroon-50: #fbeef0;
+  --color-maroon-400: #a83b48;
+  --color-maroon-500: #7a1f2b;
+  --color-maroon-600: #5e1721;
+  --color-maroon-700: #440f17;
+
+  --color-indigo-50: #eef0f8;
+  --color-indigo-400: #3a4574;
+  --color-indigo-500: #1e2749;
+  --color-indigo-600: #161c37;
+  --color-indigo-700: #0f1326;
+
+  --color-gold-400: #e0b23a;
+  --color-gold-500: #c9971c;
+  --color-gold-600: #a97b12;
+
+  --color-parchment-50: #fffdf9;
+  --color-parchment-100: #fbf3e7;
+  --color-parchment-200: #f4e6d1;
+
+  --color-ink-500: #2b2420;
+  --color-ink-700: #1a1613;
+
+  --font-display: 'Yatra One', 'Rajdhani', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Hind', ui-sans-serif, system-ui, sans-serif;
+  --font-utility: 'Rajdhani', ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-diya: 0 8px 24px -8px rgb(122 31 43 / 0.35);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-parchment-100 font-body text-ink-700 antialiased;
+}
+
+/* Visible keyboard focus everywhere, including custom components. */
+:focus-visible {
+  outline: 3px solid var(--color-marigold-500);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Respect reduced-motion preferences across the whole app. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Signature shape: a temple-arch top edge, reused on temple cards and the
+   hero panel so the "architecture" of the page echoes the subject. */
+.temple-arch {
+  border-radius: 50% 50% 0 0 / 18% 18% 0 0;
+}
+
+/* Bottom tab bar sits above the iOS/Android home indicator when the PWA
+   is installed full-screen. */
+.safe-bottom {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+}
+
+.safe-top {
+  padding-top: max(0rem, env(safe-area-inset-top));
+}
+
+/* Utility numerals (timings, countdowns) use the utility face at a
+   slightly wider tracking so times stay legible at a glance. */
+.tabular-time {
+  font-family: var(--font-utility);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}

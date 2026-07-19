@@ -1,0 +1,77 @@
+{
+  "name": "shree-laxmi-inn-pwa",
+  "private": true,
+  "version": "1.0.0",
+  "description": "QR-based Progressive Web App for Shree Laxmi Inn, Ayodhya: a temple darshan guide, aarti timings, darshan routes, guesthouse information and an admin panel, backed by Firebase.",
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "Prince Boyard MBOUNGOU NGOMA",
+    "url": "https://github.com/MrBoyard7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MrBoyard7/shree-laxmi-inn-pwa.git"
+  },
+  "homepage": "https://github.com/MrBoyard7/shree-laxmi-inn-pwa#readme",
+  "bugs": {
+    "url": "https://github.com/MrBoyard7/shree-laxmi-inn-pwa/issues"
+  },
+  "keywords": [
+    "pwa",
+    "react",
+    "vite",
+    "firebase",
+    "tailwindcss",
+    "qr-code",
+    "guesthouse",
+    "ayodhya",
+    "darshan-guide"
+  ],
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "generate-icons": "python3 scripts/generate_icons.py"
+  },
+  "dependencies": {
+    "firebase": "^12.16.0",
+    "prop-types": "^15.8.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-router-dom": "^7.18.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@tailwindcss/vite": "^4.3.3",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.3",
+    "@vitest/coverage-v8": "^4.1.10",
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.3",
+    "globals": "^17.7.0",
+    "jsdom": "^29.1.1",
+    "prettier": "^3.9.5",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.1.1",
+    "vite-plugin-pwa": "^1.3.0",
+    "vitest": "^4.1.10"
+  }
+}
