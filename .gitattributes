@@ -1,0 +1,13 @@
+# Normalize line endings to LF for every text file, regardless of the
+# contributor's OS or editor settings (e.g. Windows' core.autocrlf).
+# This avoids "works on my machine, fails in CI" Prettier/ESLint
+# failures caused by CRLF line endings sneaking into a commit.
+* text=auto eol=lf
+
+# Binary files: never touch line endings, ever.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.woff binary
+*.woff2 binary
