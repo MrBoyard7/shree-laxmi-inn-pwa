@@ -39,6 +39,8 @@ A QR-based Progressive Web App for **Shree Laxmi Inn**, a guesthouse in Ayodhya.
 
 **Admin Panel** (`/admin`)
 
+<img src="docs/screenshots/admin-login.png" alt="Admin Panel login screen" width="260" />
+
 - Add / edit / delete temples, including photo upload
 - Update opening hours and aarti timings
 - Reorder and edit the three darshan routes
@@ -55,7 +57,7 @@ A QR-based Progressive Web App for **Shree Laxmi Inn**, a guesthouse in Ayodhya.
 | Data & Auth              | Firebase (Firestore, Auth, Storage) | Real-time sync for admin edits, managed auth, photo storage         |
 | Maps                     | Google Maps deep links              | No API key or billing needed for "open directions" / "search" links |
 | Offline / installability | `vite-plugin-pwa` (Workbox)         | Manifest + service worker generation, offline caching               |
-| Testing                  | Vitest + React Testing Library      | Fast, Vite-native unit/component tests with coverage                |
+| Testing                  | Vitest + RTL + user-event           | Fast, Vite-native unit/component tests with realistic interactions  |
 | Linting / formatting     | ESLint 9 (flat config) + Prettier   | Consistent code style, React Hooks rules enforced                   |
 | CI                       | GitHub Actions + Codecov            | Lint, format check, tests with coverage, and build on every push/PR |
 
@@ -65,55 +67,84 @@ A QR-based Progressive Web App for **Shree Laxmi Inn**, a guesthouse in Ayodhya.
 shree-laxmi-inn-pwa/
 ├── .github/
 │   └── workflows/
-│       └── ci.yml                  # Lint, format check, test+coverage, build
+│       └── ci.yml                    # Lint, format check, test+coverage, build
 ├── docs/
-│   └── screenshots/                 # Screenshots used in this README
+│   └── screenshots/                   # Screenshots used in this README
 ├── public/
 │   ├── favicon.svg
-│   └── icons/                       # Generated PWA icon set (see scripts/generate_icons.py)
+│   └── icons/                         # Generated PWA icon set (see scripts/generate_icons.py)
 ├── scripts/
-│   └── generate_icons.py            # Regenerates the app icon set from the brand mark
+│   └── generate_icons.py              # Regenerates the app icon set from the brand mark
 ├── src/
 │   ├── components/
-│   │   ├── admin/                   # ProtectedRoute, AdminLayout
-│   │   ├── common/                  # Buttons, icons, spinner, empty state
-│   │   ├── layout/                  # AppLayout, BottomNav, PageHeader, Footer
-│   │   └── temple/                  # TempleCard, NextAartiRibbon
+│   │   ├── admin/
+│   │   │   ├── AdminLayout.jsx
+│   │   │   ├── ProtectedRoute.jsx
+│   │   │   └── __tests__/             # 3 test files
+│   │   ├── common/
+│   │   │   ├── Misc.jsx
+│   │   │   ├── QuickActionButton.jsx
+│   │   │   ├── icons.jsx
+│   │   │   └── __tests__/             # 2 test files
+│   │   ├── layout/
+│   │   │   ├── AppLayout.jsx
+│   │   │   ├── BottomNav.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   ├── PageHeader.jsx
+│   │   │   └── __tests__/             # 3 test files
+│   │   └── temple/
+│   │       ├── NextAartiRibbon.jsx
+│   │       ├── TempleCard.jsx
+│   │       └── __tests__/             # 2 test files
 │   ├── context/
-│   │   ├── AuthContext.jsx          # Firebase Auth (or local demo login)
-│   │   └── DataContext.jsx          # Live temples/routes/guesthouse/contacts
+│   │   ├── AuthContext.jsx            # Firebase Auth (or local demo login)
+│   │   ├── DataContext.jsx            # Live temples/routes/guesthouse/contacts
+│   │   └── __tests__/                 # 2 test files
 │   ├── data/
-│   │   ├── temples.seed.js          # 22 sample Ayodhya temples & sites
-│   │   ├── routes.seed.js           # 2h / 4h / full-day sample routes
-│   │   └── guesthouse.seed.js       # Sample guesthouse info & emergency contacts
+│   │   ├── temples.seed.js            # 22 sample Ayodhya temples & sites
+│   │   ├── routes.seed.js             # 2h / 4h / full-day sample routes
+│   │   └── guesthouse.seed.js         # Sample guesthouse info & emergency contacts
 │   ├── firebase/
-│   │   └── config.js                # Firebase init, guarded by env vars
+│   │   └── config.js                  # Firebase init, guarded by env vars
 │   ├── pages/
-│   │   ├── admin/                   # AdminLogin, AdminDashboard, editors
+│   │   ├── admin/
+│   │   │   ├── AdminDashboard.jsx
+│   │   │   ├── AdminLogin.jsx
+│   │   │   ├── ContactsEditor.jsx
+│   │   │   ├── GuesthouseEditor.jsx
+│   │   │   ├── RoutesEditor.jsx
+│   │   │   ├── TempleEditor.jsx
+│   │   │   └── __tests__/             # 6 test files
 │   │   ├── Home.jsx
 │   │   ├── DarshanGuide.jsx
 │   │   ├── TempleDetail.jsx
 │   │   ├── DarshanRoutes.jsx
 │   │   ├── GuesthouseInfo.jsx
 │   │   ├── EmergencyContacts.jsx
-│   │   └── NotFound.jsx
+│   │   ├── NotFound.jsx
+│   │   └── __tests__/                 # 7 test files
 │   ├── services/
-│   │   ├── dataService.js           # Firestore ⇄ local-demo-store switch
-│   │   ├── localStore.js            # localStorage-backed demo data layer
-│   │   └── photoUpload.js           # Firebase Storage ⇄ base64 demo upload
+│   │   ├── dataService.js             # Firestore ⇄ local-demo-store switch
+│   │   ├── localStore.js              # localStorage-backed demo data layer
+│   │   ├── photoUpload.js             # Firebase Storage ⇄ base64 demo upload
+│   │   └── __tests__/                 # 5 test files (local mode + Firebase mocked)
+│   ├── test/
+│   │   └── setup.js                   # jest-dom matchers, loaded by Vitest
 │   ├── utils/
-│   │   ├── links.js                 # tel: / wa.me / Google Maps link builders
-│   │   ├── time.js                  # 12h formatting + "next aarti" calculation
-│   │   └── __tests__/               # Unit tests for the two files above
-│   ├── App.jsx                      # Route table (Admin Panel is lazy-loaded)
+│   │   ├── links.js                   # tel: / wa.me / Google Maps link builders
+│   │   ├── time.js                    # 12h formatting + "next aarti" calculation
+│   │   └── __tests__/                 # 2 test files
+│   ├── App.jsx                        # Route table (Admin Panel is lazy-loaded)
 │   ├── main.jsx
-│   └── index.css                    # Tailwind v4 theme tokens & base styles
+│   └── index.css                      # Tailwind v4 theme tokens & base styles
 ├── .env.example
 ├── eslint.config.js
 ├── vite.config.js
 ├── LICENSE
 └── package.json
 ```
+
+32 test files, 141 tests in total — see [Testing](#testing) below for coverage numbers.
 
 ## Getting started
 
@@ -160,6 +191,25 @@ npm run test:coverage     # → all tests passing, with a coverage table printed
 npm run build             # → dist/ produced, plus dist/sw.js and dist/manifest.webmanifest
 npm run preview           # → open the printed URL to click through the built app
 ```
+
+## Testing
+
+The suite covers every page, every Admin Panel screen, both data backends (local demo store and Firebase, with Firebase mocked), and the small utility modules — 140+ tests in total.
+
+```bash
+npm run test:coverage
+```
+
+Latest run:
+
+| Metric     | Coverage   |
+| ---------- | ---------- |
+| Statements | **96.6 %** |
+| Branch     | **93.2 %** |
+| Functions  | **94.9 %** |
+| Lines      | **98.6 %** |
+
+The Codecov badge at the top of this file tracks this number on every push. HTML and lcov reports are also written to `coverage/` (gitignored) for local inspection.
 
 ## Admin Panel access
 
